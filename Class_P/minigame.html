@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="minigame.css">
+    <link rel="script" href="#">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Click the Button Game</title>
+</head>
+<body>
+
+<div class="game-container">
+    <h1>Click the Button Game</h1>
+    <button id="clickButton" class="button">Click Me!</button>
+    <p id="timer" class="timer">Time Left: 10</p>
+    <p id="score" class="score hidden">Your Score: 0</p>
+    <button id="homeButton" class="button" onclick="window.location.href='index.html'">Return to Home</button>
+</div>
+
+<script>
+    let score = 0;
+    let timeLeft = 10;
+    let gameInterval;
+    let timerInterval;
+
+    const clickButton = document.getElementById("clickButton");
+    const timerDisplay = document.getElementById("timer");
+    const scoreDisplay = document.getElementById("score");
+
+    function startGame() {
+        score = 0;
+        timeLeft = 10;
+        scoreDisplay.classList.add("hidden");
+        scoreDisplay.textContent = "Your Score: " + score;
+        clickButton.disabled = false;
+        timerDisplay.textContent = "Time Left: " + timeLeft;
+        
+        timerInterval = setInterval(function() {
+            timeLeft--;
+            timerDisplay.textContent = "Time Left: " + timeLeft;
+
+            if (timeLeft === 0) {
+                clearInterval(timerInterval);
+                endGame();
+            }
+        }, 1000);
+
+        clickButton.addEventListener("click", () => {
+            score++;
+            scoreDisplay.textContent = "Your Score: " + score;
+            scoreDisplay.classList.remove("hidden");
+        });
+    }
+
+    function endGame() {
+        clickButton.disabled = true;
+        alert("Time's up! Your final score is " + score);
+    }
+
+    startGame();
+</script>
+
+</body>
+</html>
